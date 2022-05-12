@@ -12,6 +12,6 @@ jobs:
         with:
           node-version: 14
       - name: install packages
-        run: npm ci
-      - name: run tests
-        run: npm test
+        run: |
+          npm ci
+          npm test
