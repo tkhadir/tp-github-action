@@ -2,7 +2,7 @@ name: ex1
 on: 
   workflow_dispatch:
 jobs:
-  build:
+  trigger_ex1:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
