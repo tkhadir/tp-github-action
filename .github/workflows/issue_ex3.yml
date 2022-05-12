@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: set sha variable
-        run: echo "${{GITHUB_SHA::7}}" >> $MY_ISSUE_SHA
+        run: echo "${GITHUB_SHA::7}" >> $MY_ISSUE_SHA
       - name: create issue
         shell: bash
         run: |
