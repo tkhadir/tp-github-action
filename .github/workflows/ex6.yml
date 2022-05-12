@@ -18,7 +18,7 @@ jobs:
         - name: run install
           shell: bash
           run: |
-            npm test
+            npm ci
 
   run-npm-test:
     runs-on: ubuntu-latest
