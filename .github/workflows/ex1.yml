@@ -12,4 +12,4 @@ jobs:
         with:
           node-version: 14
       - name: install packages
-        run: npm ci
+        run: npm install
