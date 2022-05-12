@@ -19,6 +19,17 @@ jobs:
           shell: bash
           run: |
             npm ci
+        - name: Cache node modules
+          uses: actions/cache@v3
+          env:
+            cache-name: cache-node-modules
+          with:
+            path: ~/node_modules
+            key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-build-${{ env.cache-name }}-
+              ${{ runner.os }}-build-
+              ${{ runner.os }}-
 
   run-npm-test:
     runs-on: ubuntu-latest
