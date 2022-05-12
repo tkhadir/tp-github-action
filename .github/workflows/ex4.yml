@@ -4,9 +4,6 @@ on:
 
 jobs:
   call-reusable:
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-      - uses: ./.github/workflows/ex4_reusable_wrklw
-        with:
-          version: 14
+    uses: './.github/workflows/ex4_reusable_wrklw.yml'
+    with:
+      version: 14
