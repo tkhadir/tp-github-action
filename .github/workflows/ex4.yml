@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: ./.github/workflows/ex4_reusable_wrklw
         with:
-          varsion: 14
+          version: 14
