@@ -100,10 +100,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      - name: print current branch name
-        run: |
-          echo "${github.ref}"
       - name: build docker image
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref_name == 'main'
         run: |
           docker build -t {{ github.sha }} .
