@@ -2,19 +2,20 @@ name: job ex6
 on: 
   workflow_dispatch:
 
-env:
-  node-version: 16
-
 jobs:
   run-npm-install:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-18.04]
+        node: ['14', 'lts/*']
+    runs-on: ${{ matrix.os }}
     steps:
         - name: checkout
           uses: actions/checkout@v2
         - name : setup node
           uses: actions/setup-node@v2
           with:
-            node-version: ${{ env.node-version }}
+            node-version: ${{ matrix.node }}
         - name: run install
           shell: bash
           run: |
@@ -32,7 +33,11 @@ jobs:
               ${{ runner.os }}-
 
   run-npm-test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-18.04]
+        node: ['14', 'lts/*']
+    runs-on: ${{ matrix.os }}
     needs: run-npm-install
     steps:
         - name: checkout
@@ -40,7 +45,7 @@ jobs:
         - name : setup node
           uses: actions/setup-node@v2
           with:
-            node-version: ${{ env.node-version }}
+            node-version: ${{ matrix.node }}
         - name: Cache node modules
           uses: actions/cache@v3
           env:
