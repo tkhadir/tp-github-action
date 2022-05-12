@@ -1,0 +1,23 @@
+name: interact with Github API
+on: 
+  pull_request:
+env:
+  NODE_VERSION: 14
+
+jobs:
+  run-npm-test:
+    runs-on: ubuntu-latest
+    steps:
+        - name: checkout
+          uses: actions/checkout@v2
+        - name : setup node
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{ NODE_VERSION }}
+        - name: check node version
+          run: node -v
+        - name: run test
+          shell: bash
+          run: |
+            npm install
+            npm test
