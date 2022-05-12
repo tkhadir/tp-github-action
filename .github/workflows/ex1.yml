@@ -14,6 +14,7 @@ jobs:
       - name: install packages
         run: npm install
   trigger_ex1_part2:
+    needs: trigger_ex1
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
