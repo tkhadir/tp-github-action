@@ -4,6 +4,6 @@ on:
 
 jobs:
   call-reusable:
-    uses: './.github/workflows/ex4_reusable_wrkflw.yml'
+    uses: './.github/workflows/ex4_reusable.yml'
     with:
       version: 14
