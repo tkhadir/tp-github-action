@@ -1,0 +1,12 @@
+name: reusable workflow ex
+on: 
+  workflow_dispatch:
+
+jobs:
+  call-reusable:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: ./.github/workflows/ex4_reusable_wrklw
+        with:
+          varsion: 14

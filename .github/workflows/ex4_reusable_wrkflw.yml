@@ -1,0 +1,24 @@
+name: reusable workflow 4
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    steps:
+        - name: checkout
+          uses: actions/checkout@v2
+        - name : setup node
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{ version }}
+        - name: run test
+          shell: bash
+          run: |
+            node -v
+            npm install
+            npm test
