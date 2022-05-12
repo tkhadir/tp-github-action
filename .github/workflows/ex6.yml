@@ -7,7 +7,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, ubuntu-18.04]
-        node: ['14', 'lts/*']
+        node: ['12', '14', 'lts/*']
+        exclude:
+          - os: ubuntu-18.04
+            node: '12'
     runs-on: ${{ matrix.os }}
     steps:
         - name: checkout
@@ -36,7 +39,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, ubuntu-18.04]
-        node: ['14', 'lts/*']
+        node: ['12', '14', 'lts/*']
+        exclude:
+          - os: ubuntu-18.04
+            node: '12'
     runs-on: ${{ matrix.os }}
     needs: run-npm-install
     steps:
