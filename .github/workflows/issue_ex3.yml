@@ -6,13 +6,14 @@ jobs:
   create-issue:
     runs-on: ubuntu-latest
     steps:
-      - name: set sha variable
-        run: echo "${GITHUB_SHA::7}" >> $MY_ISSUE_SHA
+      - name: set issue var
+        run: echo '::set-output name=MY_ISSUE_SHA::${GITHUB_SHA::7}'
+        id: set-issue-var
       - name: create issue
         shell: bash
         run: |
           echo "start creating issue"
-          curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/tkhadir/tp-github-action/issues -d '{"title":"Found a bug - $MY_ISSUE_SHA","body":"I'm having a problem with this.","assignees":["octocat"],"milestone":1,"labels":["bug"]}'
+          curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/tkhadir/tp-github-action/issues -d '{"title":"Found a bug - ${{ steps.set-issue-var.outputs.MY_ISSUE_SHA }}","body":"I'm having a problem with this.","assignees":["octocat"],"milestone":1,"labels":["bug"]}'
           echo "end creating"
           echo ""
      
