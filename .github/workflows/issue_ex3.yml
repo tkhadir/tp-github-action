@@ -3,20 +3,30 @@ on:
   pull_request:
 
 jobs:
-  create-issue:
+  run-npm-test:
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
     steps:
-      - name: set issue var
-        run: echo '::set-output name=MY_ISSUE_SHA::${GITHUB_SHA::7}'
-        id: set-issue-var
-      - name: create issue
-        shell: bash
+      - id: short_sha
         run: |
-          echo "start creating issue"
-          curl \
-          -X POST \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/OWNER/REPO/issues \
-          -d '{"title":"Found a bug ${{ steps.set-issue-var.outputs.MY_ISSUE_SHA }}","body":"I'm having a problem with this.","assignees":["octocat"],"milestone":1,"labels":["bug"]}' \
+          GITHUB_PR_SHA=${{github.event.pull_request.base.sha}}
+           
+          echo "::set-output name=sha_short::${GITHUB_SHA::7}"
+          # echo "::set-output name=sha_short::${GITHUB_PR_SHA::7}"
+      # - id: short_sha
+      #   run: |
+      #     echo "GITHUB_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV 
+            # USE {{env.GITHUB_SHA}} in next step
+
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue for commit: ${{ steps.short_sha.outputs.sha_short }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ steps.short_sha.outputs.sha_short }}_."
+            }' \
           --fail
-     
